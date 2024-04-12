@@ -38,11 +38,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   late TabController controller;
+  int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     controller = TabController(length: 3, vsync: this);
+    controller.addListener((){
+        setState(() {
+          currentIndex = controller.index;
+        });
+    });
   }
 
   @override
@@ -155,7 +161,8 @@ class _MyHomePageState extends State<MyHomePage>
         ],
         onTap: (index) {
           setState(() {
-            controller.animateTo(index, curve: Curves.easeInOut);
+            controller.index = index;
+            controller.animateTo(index, curve: Curves.easeInOut, duration: const Duration(milliseconds: 100));
           });
         },
       ),
