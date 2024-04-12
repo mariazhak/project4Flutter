@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'widgets/gestureContainer.dart';
 import 'widgets/info.dart';
 import 'widgets/viewList.dart';
@@ -136,22 +137,27 @@ class _MyHomePageState extends State<MyHomePage>
         controller: controller,
         children: tabs,
       ),
-      bottomNavigationBar: TabBar(
-        controller: controller,
-        tabs: const [
-          Tab(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: controller.index,
+        items: const [
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.building_2_fill),
-            text: 'Cities',
+            label: 'Cities',
           ),
-          Tab(
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.snow),
-            text: 'Mountains',
+            label: 'Mountains',
           ),
-          Tab(
+          BottomNavigationBarItem(
             icon: Icon(CupertinoIcons.drop_fill),
-            text: 'Coasts',
+            label: 'Coasts',
           ),
         ],
+        onTap: (index) {
+          setState(() {
+            controller.animateTo(index, curve: Curves.easeInOut);
+          });
+        },
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: (){
